@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public final class Route {
 
-    private int tries;
+    private int totalTries;
 
     @Nonnull
     private Date firstStarted;
@@ -29,14 +29,14 @@ public final class Route {
     private String notes;
 
     public Route(@Nonnull Date firstStarted,
-            int tries,
+            int totalTries,
             @Nonnull Optional<Date> finished,
             @Nonnull Grade grade,
             @Nonnull Optional<Zone> zone,
             @Nonnull Craig craig,
             @Nonnull String notes) {
         this.firstStarted = firstStarted;
-        this.tries = tries;
+        this.totalTries = totalTries;
         this.finished = finished;
         this.grade = grade;
         this.zone = zone;
@@ -44,8 +44,8 @@ public final class Route {
         this.notes = notes;
     }
 
-    public int getTries() {
-        return tries;
+    public int getTotalTries() {
+        return totalTries;
     }
 
     @Nonnull
