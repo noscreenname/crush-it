@@ -18,7 +18,6 @@ public final class AttemptEntity {
     private int tries;
 
     @ManyToOne(targetEntity = AttemptEntity.class, fetch = FetchType.EAGER)
-    @Column(name = "ROUTE_ID")
     private RouteEntity routes;
 
     public AttemptEntity() {

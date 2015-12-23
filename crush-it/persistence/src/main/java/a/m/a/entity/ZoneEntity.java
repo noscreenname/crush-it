@@ -14,7 +14,6 @@ public final class ZoneEntity {
     private int name;
 
     @ManyToOne(targetEntity = CraigEntity.class, fetch = FetchType.EAGER)
-    @Column(name = "CRAIG_ID", nullable = false, unique = false)
     private CraigEntity craig;
 
     public ZoneEntity() {

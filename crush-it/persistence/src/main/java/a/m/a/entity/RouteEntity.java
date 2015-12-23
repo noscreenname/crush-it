@@ -14,15 +14,12 @@ public final class RouteEntity {
     private String name;
 
     @ManyToOne(targetEntity = GradeEntity.class, fetch = FetchType.EAGER)
-    @Column(name = "GRADE_ID", nullable = true, unique = false)
     private GradeEntity grade;
 
     @ManyToOne(targetEntity = ZoneEntity.class, fetch = FetchType.LAZY)
-    @Column(name = "ZONE_ID", nullable = true, unique = false)
     private ZoneEntity zone;
 
     @ManyToOne(targetEntity = CraigEntity.class, fetch = FetchType.LAZY)
-    @Column(name = "CRAIG_ID", nullable = false, unique = true)
     private CraigEntity craig;
 
     @Column(name = "DESCRIPTION", nullable = true, unique = false)
