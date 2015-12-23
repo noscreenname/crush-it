@@ -1,25 +1,34 @@
 package a.m.a.entity;
 
-import javax.annotation.Nonnull;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "GRADE_SYSTEM")
 public final class RouteEntity {
 
-    int id;
+    @Id
+    @Column(name = "ID")
+    private int id;
 
-    @Nonnull
-    private String grade;
+    @Column(name = "NAME", nullable = true, unique = false)
+    private String name;
 
-    @Nonnull
-    private String zone;
+    @ManyToOne(targetEntity = GradeEntity.class, fetch = FetchType.EAGER)
+    @Column(name = "GRADE_ID", nullable = true, unique = false)
+    private GradeEntity grade;
 
-    @Nonnull
-    private String craig;
+    @ManyToOne(targetEntity = ZoneEntity.class, fetch = FetchType.LAZY)
+    @Column(name = "ZONE_ID", nullable = true, unique = false)
+    private ZoneEntity zone;
 
-    @Nonnull
-    private String notes;
+    @ManyToOne(targetEntity = CraigEntity.class, fetch = FetchType.LAZY)
+    @Column(name = "CRAIG_ID", nullable = false, unique = true)
+    private CraigEntity craig;
+
+    @Column(name = "DESCRIPTION", nullable = true, unique = false)
+    private String description;
 
     public RouteEntity() {
-
     }
 
     //<editor-fold desc="Getters & setters">
@@ -31,40 +40,40 @@ public final class RouteEntity {
         this.id = id;
     }
 
-    @Nonnull
-    public String getGrade() {
+    public String getName() {
+        return name;
+    }
+
+    public GradeEntity getGrade() {
         return grade;
     }
 
-    public void setGrade(@Nonnull String grade) {
+    public void setGrade(GradeEntity grade) {
         this.grade = grade;
     }
 
-    @Nonnull
-    public String getZone() {
+    public ZoneEntity getZone() {
         return zone;
     }
 
-    public void setZone(@Nonnull String zone) {
+    public void setZone(ZoneEntity zone) {
         this.zone = zone;
     }
 
-    @Nonnull
-    public String getCraig() {
+    public CraigEntity getCraig() {
         return craig;
     }
 
-    public void setCraig(@Nonnull String craig) {
+    public void setCraig(CraigEntity craig) {
         this.craig = craig;
     }
 
-    @Nonnull
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(@Nonnull String notes) {
-        this.notes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
     //</editor-fold>
 }

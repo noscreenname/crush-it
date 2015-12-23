@@ -5,6 +5,5 @@
     <session-factory>
         <!--<mapping package="a.m.a.entity"/>-->
         <mapping class="a.m.a.entity.GradeSystemEntity"/>
-        <!--<mapping resource="test/animals/orm.xml"/>-->
     </session-factory>
 </hibernate-configuration>

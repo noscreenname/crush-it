@@ -6,20 +6,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GRADE_SYSTEM")
-public final class GradeSystemEntity {
+@Table(name = "CRAIG")
+public final class CraigEntity {
 
     @Id
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false, unique = false)
     private String name;
 
-    //<editor-fold desc="getters & setters">
-    public GradeSystemEntity() {
+    public CraigEntity() {
     }
 
+    //<editor-fold desc="getters & setters">
     public int getId() {
         return id;
     }
