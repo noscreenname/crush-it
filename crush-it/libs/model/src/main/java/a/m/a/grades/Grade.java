@@ -10,9 +10,13 @@ public abstract class Grade {
     @Nonnull
     private final int techValue;
 
-    protected Grade(@Nonnull GradeSystem system, int techValue) {
+    @Nonnull
+    private final String value;
+
+    protected Grade(@Nonnull GradeSystem system, int techValue, @Nonnull String value) {
         this.system = system;
         this.techValue = techValue;
+        this.value = value;
     }
 
     @Nonnull
@@ -25,7 +29,8 @@ public abstract class Grade {
         return techValue;
     }
 
-    public String stringValue() {
-        return system.get(techValue);
+    @Nonnull
+    public String getValue() {
+        return value;
     }
 }

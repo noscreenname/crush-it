@@ -58,6 +58,12 @@ create table GRADE (
 create table GRADE_SYSTEM (
     ID int4 not null,
     NAME varchar(255) not null,
+    primary key (ID)
+);
+
+create table ROUTE (
+    ID int4 not null,
+    NAME varchar(255),
     DESCRIPTION varchar(255),
     craig_ID int4,
     grade_ID int4,
@@ -82,24 +88,24 @@ alter table GRADE_SYSTEM
 alter table ATTEMPT
     add constraint FK_1ste3u2qwonsnp6kxpwv0lriv
     foreign key (routes_ID)
-    references ATTEMPT;
+    references ROUTE;
 
 alter table GRADE
     add constraint FK_29dwsir0mat48xm1n2utgj429
     foreign key (gradeSystem_ID)
     references GRADE_SYSTEM;
 
-alter table GRADE_SYSTEM
+alter table ROUTE
     add constraint FK_bj9hk9fwv6e371ivat9u9g3by
     foreign key (craig_ID)
     references CRAIG;
 
-alter table GRADE_SYSTEM
+alter table ROUTE
     add constraint FK_fwprd74gg04iiwt2x5d5h9739
     foreign key (grade_ID)
     references GRADE;
 
-alter table GRADE_SYSTEM
+alter table ROUTE
     add constraint FK_hx223f4yyhuyh9alvcs2rwspm
     foreign key (zone_ID)
     references ZONE;

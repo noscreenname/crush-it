@@ -10,16 +10,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <!--TODO update to version 5 once generating sql is no longer needed -->
         <!--<hibernate.version>4.3.11.Final</hibernate.version>-->
         <hibernate.version>5.0.3.Final</hibernate.version>
         <hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
         <postgres.version>9.1-901-1.jdbc4</postgres.version>
         <jta.verion>1.1</jta.verion>
+        <dbsetup.version>1.6.0</dbsetup.version>
     </properties>
     <artifactId>persistence</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>a.m.a</groupId>
+            <artifactId>model</artifactId>
+            <version>${version}</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -45,6 +50,11 @@
             <artifactId>jta</artifactId>
             <version>${jta.verion}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ninja-squad</groupId>
+            <artifactId>DbSetup</artifactId>
+            <version>${dbsetup.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
 </project>

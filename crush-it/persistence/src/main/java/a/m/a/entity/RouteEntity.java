@@ -3,7 +3,7 @@ package a.m.a.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "GRADE_SYSTEM")
+@Table(name = "ROUTE")
 public final class RouteEntity {
 
     @Id

@@ -17,7 +17,7 @@ public final class AttemptEntity {
     @Column(name = "tries", nullable = false, unique = false)
     private int tries;
 
-    @ManyToOne(targetEntity = AttemptEntity.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = RouteEntity.class, fetch = FetchType.EAGER)
     private RouteEntity routes;
 
     public AttemptEntity() {
