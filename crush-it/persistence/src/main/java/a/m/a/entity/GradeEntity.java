@@ -1,5 +1,8 @@
 package a.m.a.entity;
 
+import a.m.a.Grade;
+
+import javax.annotation.Nonnull;
 import javax.persistence.*;
 
 @Entity
@@ -53,6 +56,12 @@ public final class GradeEntity {
 
     public void setGradeSystem(GradeSystemEntity gradeSystem) {
         this.gradeSystem = gradeSystem;
+    }
+
+    @Nonnull
+    public static Grade toGrade(@Nonnull Object entity) {
+        GradeEntity gradeEntity = (GradeEntity) entity;
+        return new Grade(gradeEntity.gradeSystem.toGradeSystem(), gradeEntity.techValue, gradeEntity.name);
     }
     //</editor-fold>
 }

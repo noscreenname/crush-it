@@ -1,7 +1,7 @@
 package a.m.a.service;
 
 import a.m.a.common.CommonOperations;
-import a.m.a.grades.Grade;
+import a.m.a.Grade;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.destination.DriverManagerDestination;

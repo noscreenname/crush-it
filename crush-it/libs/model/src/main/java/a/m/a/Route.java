@@ -1,7 +1,5 @@
 package a.m.a;
 
-import a.m.a.grades.Grade;
-
 import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.Optional;

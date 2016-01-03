@@ -47,9 +47,8 @@ public final class SqlGenerator {
         // <!> this doesn't work with hibernate 5
         SchemaExport schemaExport = new SchemaExport(conf);
         schemaExport.setDelimiter(";");
-        /**Just dump the schema SQLs to the console , but not execute them ***/
         schemaExport.setOutputFile("schema-export.sql");
-        schemaExport.create(true, true);
+        schemaExport.create(true, false);
     }
 
 }

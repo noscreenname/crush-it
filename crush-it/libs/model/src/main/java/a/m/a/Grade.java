@@ -1,8 +1,8 @@
-package a.m.a.grades;
+package a.m.a;
 
 import javax.annotation.Nonnull;
 
-public abstract class Grade {
+public class Grade {
 
     @Nonnull
     private final GradeSystem system;
@@ -13,7 +13,7 @@ public abstract class Grade {
     @Nonnull
     private final String value;
 
-    protected Grade(@Nonnull GradeSystem system, int techValue, @Nonnull String value) {
+    public Grade(@Nonnull GradeSystem system, int techValue, @Nonnull String value) {
         this.system = system;
         this.techValue = techValue;
         this.value = value;

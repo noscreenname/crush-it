@@ -1,5 +1,8 @@
 package a.m.a.entity;
 
+import a.m.a.GradeSystem;
+
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,6 +37,11 @@ public final class GradeSystemEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Nonnull
+    public GradeSystem toGradeSystem() {
+        return new GradeSystem(name);
     }
     //</editor-fold>
 }
