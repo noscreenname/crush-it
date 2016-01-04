@@ -7,7 +7,6 @@ public class Grade {
     @Nonnull
     private final GradeSystem system;
 
-    @Nonnull
     private final int techValue;
 
     @Nonnull
@@ -19,12 +18,12 @@ public class Grade {
         this.value = value;
     }
 
+    //<editor-fold desc="getters">
     @Nonnull
     public GradeSystem getSystem() {
         return system;
     }
 
-    @Nonnull
     public int getTechValue() {
         return techValue;
     }
@@ -33,4 +32,34 @@ public class Grade {
     public String getValue() {
         return value;
     }
+    //</editor-fold>
+
+    //<editor-fold desc="equals, hashCode & toString">
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Grade grade = (Grade) o;
+
+        if (techValue != grade.techValue) return false;
+        if (!system.equals(grade.system)) return false;
+        if (!value.equals(grade.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = system.hashCode();
+        result = 31 * result + techValue;
+        result = 31 * result + value.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s - %s:%s]", value, system.getName(), techValue);
+    }
+    //</editor-fold>
 }
