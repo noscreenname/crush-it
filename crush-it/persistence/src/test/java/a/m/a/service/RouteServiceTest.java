@@ -1,6 +1,9 @@
 package a.m.a.service;
 
 import a.m.a.Crag;
+import a.m.a.Grade;
+import a.m.a.GradeSystem;
+import a.m.a.Route;
 import a.m.a.common.CommonOperations;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
@@ -8,6 +11,8 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Optional;
 
 import static com.ninja_squad.dbsetup.operation.CompositeOperation.sequenceOf;
 import static org.testng.Assert.assertEquals;
@@ -44,7 +49,17 @@ public class RouteServiceTest {
 
     @Test
     public void create_should_add_new_route() {
-
+        //-- GIVEN
+        //TODO repace this by an actual get
+        Grade red = new Grade(new GradeSystem("FONT"), 12, "6B+"); //id = 12
+        Crag arkose = new Crag("Arkose"); // id = 1
+        Route expected = new Route("new route", red, arkose, "A darn fun route!");
+        //-- WHEN
+        int routeId = service.create(expected.getName(), 12, 1, expected.getDescription());
+        //-- THEN
+        Optional<Route> actualOpt = service.get(routeId);
+        Assert.assertTrue(actualOpt.isPresent());
+        assertEquals(actualOpt.get(), expected);
     }
 
 }

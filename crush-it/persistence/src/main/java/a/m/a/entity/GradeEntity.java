@@ -59,9 +59,8 @@ public final class GradeEntity {
     }
 
     @Nonnull
-    public static Grade toGrade(@Nonnull Object entity) {
-        GradeEntity gradeEntity = (GradeEntity) entity;
-        return new Grade(gradeEntity.gradeSystem.toGradeSystem(), gradeEntity.techValue, gradeEntity.name);
+    public Grade toGrade() {
+        return new Grade(gradeSystem.toGradeSystem(), techValue, name);
     }
     //</editor-fold>
 }

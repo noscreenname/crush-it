@@ -14,7 +14,7 @@ public final class CommonOperations {
 
     public static final int FONT_SYSTEM_ID = 1;
 
-    private static final int COLOR_SYSTEM_ID = 2;
+    public static final int COLOR_SYSTEM_ID = 2;
 
     private static final int FIRST_COLOR_GRADE_ID = 100;
 

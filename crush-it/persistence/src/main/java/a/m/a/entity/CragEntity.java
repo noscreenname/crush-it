@@ -40,8 +40,8 @@ public final class CragEntity {
     }
     //</editor-fold>
 
-    public static Crag toCrag(@Nonnull Object entity) {
-        CragEntity cragEntity = (CragEntity) entity;
-        return new Crag(cragEntity.name);
+    @Nonnull
+    public Crag toCrag() {
+        return new Crag(name);
     }
 }

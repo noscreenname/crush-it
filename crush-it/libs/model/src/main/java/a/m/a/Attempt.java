@@ -20,11 +20,7 @@ public final class Attempt {
         this.tries = 0;
     }
 
-    public void addTry() {
-        tries++;
-    }
-
-    //<editor-fold desc="Description">
+    //<editor-fold desc="getters">
     @Nonnull
     public Route getRoute() {
         return route;

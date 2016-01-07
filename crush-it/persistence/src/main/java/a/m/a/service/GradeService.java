@@ -22,7 +22,7 @@ public final class GradeService {
 
     @Nonnull
     public List<Grade> getAll(@Nonnull String systemName) {
-        List<Grade> result = new ArrayList<>();
+        List<Grade> grades = new ArrayList<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             List entities = session.createCriteria(GradeEntity.class, "grade")
@@ -31,10 +31,13 @@ public final class GradeService {
                     .addOrder(Order.asc("techValue"))
                     .list();
             tx.commit();
-            for (Object entity : entities) {
-                result.add(GradeEntity.toGrade(entity));
+            if (entities == null) {
+                return grades;
             }
-            return result;
+            for (Object entity : entities) {
+                grades.add(((GradeEntity) entity).toGrade());
+            }
+            return grades;
         } catch (HibernateException e) {
             System.out.println("Oops !");
             throw e;
@@ -51,8 +54,11 @@ public final class GradeService {
                     .addOrder(Order.asc("techValue"))
                     .list();
             tx.commit();
+            if (entities == null) {
+                return grades;
+            }
             for (Object entity : entities) {
-                Grade grade = GradeEntity.toGrade(entity);
+                Grade grade = ((GradeEntity) entity).toGrade();
                 if (!grades.containsKey(grade.getSystem().getName())) {
                     grades.put(grade.getSystem().getName(), new ArrayList<>());
                 }

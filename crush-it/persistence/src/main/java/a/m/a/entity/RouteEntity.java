@@ -3,6 +3,7 @@ package a.m.a.entity;
 import a.m.a.Route;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Entity
@@ -41,11 +42,15 @@ public final class RouteEntity {
         return name;
     }
 
+    public void setName(@Nullable String name) {
+        this.name = name;
+    }
+
     public GradeEntity getGrade() {
         return grade;
     }
 
-    public void setGrade(GradeEntity grade) {
+    public void setGrade(@Nonnull GradeEntity grade) {
         this.grade = grade;
     }
 
@@ -53,7 +58,7 @@ public final class RouteEntity {
         return crag;
     }
 
-    public void setCrag(CragEntity crag) {
+    public void setCrag(@Nonnull CragEntity crag) {
         this.crag = crag;
     }
 
@@ -61,17 +66,17 @@ public final class RouteEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
     //</editor-fold>
 
-    public static Route toRoute(@Nonnull Object entity) {
-        RouteEntity routeEntity = (RouteEntity) entity;
+    @Nonnull
+    public Route toRoute() {
         return new Route(
-                routeEntity.name,
-                GradeEntity.toGrade(routeEntity.grade),
-                CragEntity.toCrag(routeEntity.crag),
-                routeEntity.description);
+                name,
+                grade.toGrade(),
+                crag.toCrag(),
+                description);
     }
 }
