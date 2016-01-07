@@ -1,5 +1,6 @@
 package a.m.a.service;
 
+import a.m.a.Crag;
 import a.m.a.common.CommonOperations;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
@@ -32,6 +33,13 @@ public class RouteServiceTest {
     public void getAll_should_return_all_routes() {
         dbSetupTracker.skipNextLaunch();
         assertEquals(service.getAll().size(), 7);
+    }
+
+    @Test
+    public void getAll_by_crag_should_return_all_routes_of_given_crag() {
+        dbSetupTracker.skipNextLaunch();
+        Crag arkose = new Crag("Arkose");
+        assertEquals(service.getAll(arkose).size(), 4);
     }
 
     @Test

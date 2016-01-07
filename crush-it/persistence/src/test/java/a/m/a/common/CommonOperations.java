@@ -105,9 +105,9 @@ public final class CommonOperations {
             insertInto("ROUTE")
                     .columns("NAME", "GRADE_ID", "CRAG_ID", "DESCRIPTION")
                     .withGeneratedValue("ID", ValueGenerators.sequence().startingAt(FONT_ROUTES_START))
-                    .values("Le dé", 10, ARKOSE_ID, "worm-up")
-                    .values("Astragale", 11, ARKOSE_ID, "some words")
-                    .values("La Théorie du Chaos", 11, ARKOSE_ID, "another easy one")
+                    .values("Le dé", 10, FONTAINEBLEAU_ID, "worm-up")
+                    .values("Astragale", 11, FONTAINEBLEAU_ID, "some words")
+                    .values("La Théorie du Chaos", 11, FONTAINEBLEAU_ID, "another easy one")
                     .build()
     );
 
