@@ -36,11 +36,39 @@ public class GradeServiceTest {
     @Test
     public void getAll_should_return_all_grades() {
         dbSetupTracker.skipNextLaunch();
+        GradeSystem font = new GradeSystem("FONT");
         Map<String, List<Grade>> actual = service.getAll();
         assertNotNull(actual);
         assertEquals(actual.size(), 2);
-        assertEquals(actual.get("FONT").size(), 26);
-        //TODO AMA check order
+        assertEquals(actual.get(font.getName()).size(), 26);
+        assertEquals(actual.get(font.getName()), Lists.newArrayList(
+                new Grade(font, 1, "2"),
+                new Grade(font, 2, "3"),
+                new Grade(font, 3, "4-"),
+                new Grade(font, 4, "4"),
+                new Grade(font, 5, "4+"),
+                new Grade(font, 6, "5-"),
+                new Grade(font, 7, "5"),
+                new Grade(font, 8, "5+"),
+                new Grade(font, 9, "6A"),
+                new Grade(font, 10, "6A+"),
+                new Grade(font, 11, "6B"),
+                new Grade(font, 12, "6B+"),
+                new Grade(font, 13, "6C"),
+                new Grade(font, 14, "6C+"),
+                new Grade(font, 15, "7A"),
+                new Grade(font, 16, "7A+"),
+                new Grade(font, 17, "7B"),
+                new Grade(font, 18, "7B+"),
+                new Grade(font, 19, "7C"),
+                new Grade(font, 20, "7C+"),
+                new Grade(font, 21, "8A"),
+                new Grade(font, 22, "8A+"),
+                new Grade(font, 23, "8B"),
+                new Grade(font, 24, "8B+"),
+                new Grade(font, 25, "8C"),
+                new Grade(font, 26, "8C+")
+        ));
     }
 
     @Test
