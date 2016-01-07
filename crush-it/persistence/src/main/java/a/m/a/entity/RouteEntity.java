@@ -1,5 +1,8 @@
 package a.m.a.entity;
 
+import a.m.a.Route;
+
+import javax.annotation.Nonnull;
 import javax.persistence.*;
 
 @Entity
@@ -16,11 +19,8 @@ public final class RouteEntity {
     @ManyToOne(targetEntity = GradeEntity.class, fetch = FetchType.EAGER)
     private GradeEntity grade;
 
-    @ManyToOne(targetEntity = ZoneEntity.class, fetch = FetchType.LAZY)
-    private ZoneEntity zone;
-
-    @ManyToOne(targetEntity = CraigEntity.class, fetch = FetchType.LAZY)
-    private CraigEntity craig;
+    @ManyToOne(targetEntity = CragEntity.class, fetch = FetchType.LAZY)
+    private CragEntity crag;
 
     @Column(name = "DESCRIPTION", nullable = true, unique = false)
     private String description;
@@ -49,20 +49,12 @@ public final class RouteEntity {
         this.grade = grade;
     }
 
-    public ZoneEntity getZone() {
-        return zone;
+    public CragEntity getCrag() {
+        return crag;
     }
 
-    public void setZone(ZoneEntity zone) {
-        this.zone = zone;
-    }
-
-    public CraigEntity getCraig() {
-        return craig;
-    }
-
-    public void setCraig(CraigEntity craig) {
-        this.craig = craig;
+    public void setCrag(CragEntity crag) {
+        this.crag = crag;
     }
 
     public String getDescription() {
@@ -73,4 +65,13 @@ public final class RouteEntity {
         this.description = description;
     }
     //</editor-fold>
+
+    public static Route toRoute(@Nonnull Object entity) {
+        RouteEntity routeEntity = (RouteEntity) entity;
+        return new Route(
+                routeEntity.name,
+                GradeEntity.toGrade(routeEntity.grade),
+                CragEntity.toCrag(routeEntity.crag),
+                routeEntity.description);
+    }
 }

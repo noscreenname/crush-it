@@ -1,33 +1,28 @@
 ------------------------------------------------------
 -- DROP constrains and tables
 ------------------------------------------------------
-alter table ATTEMPT
+alter table if exists  ATTEMPT
     drop constraint FK_1ste3u2qwonsnp6kxpwv0lriv;
 
-alter table GRADE
+alter table if exists  GRADE
     drop constraint FK_29dwsir0mat48xm1n2utgj429;
 
-alter table GRADE_SYSTEM
+alter table if exists  GRADE_SYSTEM
     drop constraint FK_bj9hk9fwv6e371ivat9u9g3by;
 
-alter table GRADE_SYSTEM
+alter table if exists GRADE_SYSTEM
     drop constraint FK_fwprd74gg04iiwt2x5d5h9739;
 
-alter table GRADE_SYSTEM
+alter table if exists GRADE_SYSTEM
     drop constraint FK_hx223f4yyhuyh9alvcs2rwspm;
-
-alter table ZONE
-    drop constraint FK_iyunjbbf80j2sbhvu3cliaa7p;
 
 drop table if exists ATTEMPT cascade;
 
-drop table if exists CRAIG cascade;
+drop table if exists CRAG cascade;
 
 drop table if exists GRADE cascade;
 
 drop table if exists GRADE_SYSTEM cascade;
-
-drop table if exists ZONE cascade;
 
 ------------------------------------------------------
 -- DROP create tables
@@ -41,7 +36,7 @@ create table ATTEMPT (
     primary key (ID)
 );
 
-create table CRAIG (
+create table CRAG (
     ID int4 not null,
     NAME varchar(255) not null,
     primary key (ID)
@@ -65,16 +60,9 @@ create table ROUTE (
     ID int4 not null,
     NAME varchar(255),
     DESCRIPTION varchar(255),
-    craig_ID int4,
+    crag_ID int4,
     grade_ID int4,
     zone_ID int4,
-    primary key (ID)
-);
-
-create table ZONE (
-    ID int4 not null,
-    NAME int4,
-    craig_ID int4,
     primary key (ID)
 );
 
@@ -97,20 +85,11 @@ alter table GRADE
 
 alter table ROUTE
     add constraint FK_bj9hk9fwv6e371ivat9u9g3by
-    foreign key (craig_ID)
-    references CRAIG;
+    foreign key (crag_ID)
+    references CRAG;
 
 alter table ROUTE
     add constraint FK_fwprd74gg04iiwt2x5d5h9739
     foreign key (grade_ID)
     references GRADE;
 
-alter table ROUTE
-    add constraint FK_hx223f4yyhuyh9alvcs2rwspm
-    foreign key (zone_ID)
-    references ZONE;
-
-alter table ZONE
-    add constraint FK_iyunjbbf80j2sbhvu3cliaa7p
-    foreign key (craig_ID)
-    references CRAIG;

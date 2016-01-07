@@ -6,12 +6,10 @@ import a.m.a.common.CommonOperations;
 import com.google.common.collect.Lists;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
-import com.ninja_squad.dbsetup.destination.DriverManagerDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +19,6 @@ import static org.testng.Assert.assertNotNull;
 
 public class GradeServiceTest {
 
-    @Nonnull
     private static DbSetupTracker dbSetupTracker = new DbSetupTracker();
     private GradeService service;
 
@@ -31,9 +28,7 @@ public class GradeServiceTest {
                 CommonOperations.DELETE_ALL,
                 CommonOperations.INSERT_COLOR_GRADES,
                 CommonOperations.INSERT_FONT_GRADES);
-        DbSetup dbSetup = new DbSetup(
-                new DriverManagerDestination(
-                        "jdbc:postgresql://localhost:5432/crushit-test", "postgres", "root"), operation);
+        DbSetup dbSetup = CommonOperations.createDbSetup(operation);
         dbSetup.launch();
         service = new GradeService();
     }
@@ -41,7 +36,7 @@ public class GradeServiceTest {
     @Test
     public void getAll_should_return_all_grades() {
         dbSetupTracker.skipNextLaunch();
-        Map<String, List<Grade>> actual = service.getAllGrades();
+        Map<String, List<Grade>> actual = service.getAll();
         assertNotNull(actual);
         assertEquals(actual.size(), 2);
         assertEquals(actual.get("FONT").size(), 26);
@@ -51,7 +46,7 @@ public class GradeServiceTest {
     @Test
     public void getAll_with_str_param_should_return_all_grades_of_a_system() {
         dbSetupTracker.skipNextLaunch();
-        List<Grade> actual = service.getAllGrades("COLOR");
+        List<Grade> actual = service.getAll("COLOR");
         GradeSystem system = new GradeSystem("COLOR");
         assertEquals(actual, Lists.newArrayList(
                 new Grade(system, 1, "yellow"),

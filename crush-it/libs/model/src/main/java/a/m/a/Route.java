@@ -1,59 +1,34 @@
 package a.m.a;
 
 import javax.annotation.Nonnull;
-import java.util.Date;
-import java.util.Optional;
 
 public final class Route {
 
-    private int totalTries;
-
     @Nonnull
-    private Date firstStarted;
-
-    @Nonnull
-    private Optional<Date> finished;
+    private String name;
 
     @Nonnull
     private Grade grade;
 
     @Nonnull
-    private Optional<Zone> zone;
+    private Crag crag;
 
     @Nonnull
-    private Craig craig;
+    private String description;
 
-    @Nonnull
-    private String notes;
-
-    public Route(@Nonnull Date firstStarted,
-            int totalTries,
-            @Nonnull Optional<Date> finished,
-            @Nonnull Grade grade,
-            @Nonnull Optional<Zone> zone,
-            @Nonnull Craig craig,
-            @Nonnull String notes) {
-        this.firstStarted = firstStarted;
-        this.totalTries = totalTries;
-        this.finished = finished;
+    public Route(@Nonnull String name,
+                 @Nonnull Grade grade,
+                 @Nonnull Crag crag,
+                 @Nonnull String description) {
+        this.name = name;
         this.grade = grade;
-        this.zone = zone;
-        this.craig = craig;
-        this.notes = notes;
-    }
-
-    public int getTotalTries() {
-        return totalTries;
+        this.crag = crag;
+        this.description = description;
     }
 
     @Nonnull
-    public Date getFirstStarted() {
-        return firstStarted;
-    }
-
-    @Nonnull
-    public Optional<Date> getFinished() {
-        return finished;
+    public String getName() {
+        return name;
     }
 
     @Nonnull
@@ -62,17 +37,12 @@ public final class Route {
     }
 
     @Nonnull
-    public Optional<Zone> getZone() {
-        return zone;
+    public Crag getCrag() {
+        return crag;
     }
 
     @Nonnull
-    public Craig getCraig() {
-        return craig;
-    }
-
-    @Nonnull
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 }

@@ -35,11 +35,10 @@ public final class SqlGenerator {
     private void initConfig() {
         conf = new Configuration();
         conf.addAnnotatedClass(AttemptEntity.class);
-        conf.addAnnotatedClass(CraigEntity.class);
+        conf.addAnnotatedClass(CragEntity.class);
         conf.addAnnotatedClass(GradeEntity.class);
         conf.addAnnotatedClass(GradeSystemEntity.class);
         conf.addAnnotatedClass(RouteEntity.class);
-        conf.addAnnotatedClass(ZoneEntity.class);
 
     }
 

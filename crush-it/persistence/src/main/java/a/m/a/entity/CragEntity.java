@@ -1,13 +1,16 @@
 package a.m.a.entity;
 
+import a.m.a.Crag;
+
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CRAIG")
-public final class CraigEntity {
+@Table(name = "CRAG")
+public final class CragEntity {
 
     @Id
     @Column(name = "ID")
@@ -16,7 +19,7 @@ public final class CraigEntity {
     @Column(name = "NAME", nullable = false, unique = false)
     private String name;
 
-    public CraigEntity() {
+    public CragEntity() {
     }
 
     //<editor-fold desc="getters & setters">
@@ -36,4 +39,9 @@ public final class CraigEntity {
         this.name = name;
     }
     //</editor-fold>
+
+    public static Crag toCrag(@Nonnull Object entity) {
+        CragEntity cragEntity = (CragEntity) entity;
+        return new Crag(cragEntity.name);
+    }
 }

@@ -21,7 +21,7 @@ public final class GradeService {
     }
 
     @Nonnull
-    public List<Grade> getAllGrades(@Nonnull String systemName) {
+    public List<Grade> getAll(@Nonnull String systemName) {
         List<Grade> result = new ArrayList<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
@@ -42,7 +42,7 @@ public final class GradeService {
     }
 
     @Nonnull
-    public Map<String, List<Grade>> getAllGrades() {
+    public Map<String, List<Grade>> getAll() {
         Map<String, List<Grade>> grades = new HashMap<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
