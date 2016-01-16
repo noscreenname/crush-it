@@ -29,6 +29,7 @@ public final class CommonOperations {
                 new DriverManagerDestination(
                         "jdbc:postgresql://localhost:5432/crushit-test", "postgres", "root"), operation);
     }
+
     public static final Operation DELETE_ALL = deleteAllFrom(
             "ATTEMPT", "ROUTE", "GRADE", "GRADE_SYSTEM", "CRAG");
 
@@ -108,6 +109,16 @@ public final class CommonOperations {
                     .values("Le dé", 10, FONTAINEBLEAU_ID, "worm-up")
                     .values("Astragale", 11, FONTAINEBLEAU_ID, "some words")
                     .values("La Théorie du Chaos", 11, FONTAINEBLEAU_ID, "another easy one")
+                    .build()
+    );
+    public static Operation INSERT_ARKOSE_ATTEMPTS = Operations.sequenceOf(
+            INSERT_ARKOSE_GRADES_AND_ROUTES,
+            insertInto("ATTEMPT")
+                    .columns("ROUTE_ID", "DATE", "TRIES")
+                    .withGeneratedValue("ID", ValueGenerators.sequence())
+                    .values(1, "2016-01-22", "2")
+                    .values(2, "2016-01-22", "5")
+                    .values(2, "2016-01-25", "3")
                     .build()
     );
 

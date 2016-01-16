@@ -32,7 +32,7 @@ create table ATTEMPT (
     ID int4 not null,
     DATE date not null,
     tries int4 not null,
-    routes_ID int4,
+    route_ID int4,
     primary key (ID)
 );
 
@@ -75,7 +75,7 @@ alter table GRADE_SYSTEM
 
 alter table ATTEMPT
     add constraint FK_1ste3u2qwonsnp6kxpwv0lriv
-    foreign key (routes_ID)
+    foreign key (route_ID)
     references ROUTE;
 
 alter table GRADE

@@ -35,6 +35,13 @@ public class RouteServiceTest {
     }
 
     @Test
+    public void when_get_by_unknown_id_should_return_empty() {
+        Optional<Route> actualOpt = service.get(11);
+        Assert.assertTrue(actualOpt.isPresent());
+        assertEquals(actualOpt, Optional.<Route>empty());
+    }
+
+    @Test
     public void getAll_should_return_all_routes() {
         dbSetupTracker.skipNextLaunch();
         assertEquals(service.getAll().size(), 7);
@@ -50,7 +57,7 @@ public class RouteServiceTest {
     @Test
     public void create_should_add_new_route() {
         //-- GIVEN
-        //TODO repace this by an actual get
+        //TODO replace this by an actual gets
         Grade red = new Grade(new GradeSystem("FONT"), 12, "6B+"); //id = 12
         Crag arkose = new Crag("Arkose"); // id = 1
         Route expected = new Route("new route", red, arkose, "A darn fun route!");
