@@ -1,6 +1,5 @@
 package a.m.a.service;
 
-import a.m.a.Grade;
 import a.m.a.HibernateFactory;
 import a.m.a.entity.GradeEntity;
 import org.hibernate.HibernateException;
@@ -15,14 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class GradeService {
+public final class GradeService extends BasicServiceImpl<Long, GradeEntity> {
 
     public GradeService() {
+        super(GradeEntity.class);
     }
 
     @Nonnull
-    public List<Grade> getAll(@Nonnull String systemName) {
-        List<Grade> grades = new ArrayList<>();
+    public List<GradeEntity> getAll(@Nonnull String systemName) {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             List entities = session.createCriteria(GradeEntity.class, "grade")
@@ -31,13 +30,7 @@ public final class GradeService {
                     .addOrder(Order.asc("techValue"))
                     .list();
             tx.commit();
-            if (entities == null) {
-                return grades;
-            }
-            for (Object entity : entities) {
-                grades.add(((GradeEntity) entity).toGrade());
-            }
-            return grades;
+            return castAllOrEmptyList(entities);
         } catch (HibernateException e) {
             System.out.println("Oops !");
             throw e;
@@ -45,8 +38,8 @@ public final class GradeService {
     }
 
     @Nonnull
-    public Map<String, List<Grade>> getAll() {
-        Map<String, List<Grade>> grades = new HashMap<>();
+    public Map<String, List<GradeEntity>> getAllOrdered() {
+        Map<String, List<GradeEntity>> grades = new HashMap<>();
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             List entities = session.createCriteria(GradeEntity.class, "grade")
@@ -58,11 +51,11 @@ public final class GradeService {
                 return grades;
             }
             for (Object entity : entities) {
-                Grade grade = ((GradeEntity) entity).toGrade();
-                if (!grades.containsKey(grade.getSystem().getName())) {
-                    grades.put(grade.getSystem().getName(), new ArrayList<>());
+                GradeEntity grade = (GradeEntity) entity;
+                if (!grades.containsKey(grade.getGradeSystem().getName())) {
+                    grades.put(grade.getGradeSystem().getName(), new ArrayList<>());
                 }
-                grades.get(grade.getSystem().getName()).add(grade);
+                grades.get(grade.getGradeSystem().getName()).add(grade);
             }
             return grades;
         } catch (HibernateException e) {

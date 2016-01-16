@@ -1,10 +1,9 @@
 package a.m.a.service;
 
-import a.m.a.Crag;
-import a.m.a.Grade;
-import a.m.a.GradeSystem;
-import a.m.a.Route;
 import a.m.a.common.CommonOperations;
+import a.m.a.entity.CragEntity;
+import a.m.a.entity.GradeEntity;
+import a.m.a.entity.RouteEntity;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.operation.Operation;
@@ -16,6 +15,7 @@ import java.util.Optional;
 
 import static com.ninja_squad.dbsetup.operation.CompositeOperation.sequenceOf;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class RouteServiceTest {
 
@@ -36,9 +36,8 @@ public class RouteServiceTest {
 
     @Test
     public void when_get_by_unknown_id_should_return_empty() {
-        Optional<Route> actualOpt = service.get(11);
-        Assert.assertTrue(actualOpt.isPresent());
-        assertEquals(actualOpt, Optional.<Route>empty());
+        Optional<RouteEntity> actualOpt = service.get(11L);
+        Assert.assertFalse(actualOpt.isPresent());
     }
 
     @Test
@@ -50,21 +49,22 @@ public class RouteServiceTest {
     @Test
     public void getAll_by_crag_should_return_all_routes_of_given_crag() {
         dbSetupTracker.skipNextLaunch();
-        Crag arkose = new Crag("Arkose");
+        CragEntity arkose = new CragEntity("Arkose");
         assertEquals(service.getAll(arkose).size(), 4);
     }
 
     @Test
     public void create_should_add_new_route() {
         //-- GIVEN
-        //TODO replace this by an actual gets
-        Grade red = new Grade(new GradeSystem("FONT"), 12, "6B+"); //id = 12
-        Crag arkose = new Crag("Arkose"); // id = 1
-        Route expected = new Route("new route", red, arkose, "A darn fun route!");
+        Optional<GradeEntity> gradeOpt = new GradeService().get(12L);
+        assertTrue(gradeOpt.isPresent());
+        Optional<CragEntity> cragOpt = new CragService().get(1L);
+        assertTrue(cragOpt.isPresent());
+        RouteEntity expected = new RouteEntity("new route", gradeOpt.get(), cragOpt.get(), "A darn fun route!");
         //-- WHEN
-        int routeId = service.create(expected.getName(), 12, 1, expected.getDescription());
+        Long routeId = service.create(expected);
         //-- THEN
-        Optional<Route> actualOpt = service.get(routeId);
+        Optional<RouteEntity> actualOpt = service.get(routeId);
         Assert.assertTrue(actualOpt.isPresent());
         assertEquals(actualOpt.get(), expected);
     }

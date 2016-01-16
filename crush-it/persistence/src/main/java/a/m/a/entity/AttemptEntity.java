@@ -1,7 +1,5 @@
 package a.m.a.entity;
 
-import a.m.a.Attempt;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
@@ -10,11 +8,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "ATTEMPT")
-public final class AttemptEntity {
+public final class AttemptEntity implements BasicEntity<Long> {
 
     @Id
     @Column(name = "ID")
-    private int id;
+    private long id;
 
     @Column(name = "DATE", nullable = false, unique = false)
     private Date date;
@@ -28,8 +26,16 @@ public final class AttemptEntity {
     public AttemptEntity() {
     }
 
+    public AttemptEntity(@Nonnull RouteEntity route, @Nonnull LocalDate localDate) {
+        super();
+        setRoute(route);
+        setDate(Date.valueOf(localDate));
+    }
+
     //<editor-fold desc="getters & setters">
-    public int getId() {
+    @Override
+    @Nullable
+    public Long getId() {
         return id;
     }
 
@@ -41,8 +47,8 @@ public final class AttemptEntity {
         return date;
     }
 
-    public void setDate(@Nonnull LocalDate date) {
-        this.date = Date.valueOf(date);
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getTries() {
@@ -60,10 +66,41 @@ public final class AttemptEntity {
     public void setRoute(RouteEntity route) {
         this.route = route;
     }
+    //</editor-fold>
 
-    @Nullable
-    public static Attempt toAttempt(@Nullable AttemptEntity entity) {
-        return entity == null ? null : new Attempt(entity.route.toRoute(), entity.date.toLocalDate());
+
+    //<editor-fold desc="equals, hashCode & toString">
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttemptEntity that = (AttemptEntity) o;
+
+        if (tries != that.tries) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (route != null ? !route.equals(that.route) : that.route != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + tries;
+        result = 31 * result + (route != null ? route.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "AttemptEntity{" +
+                "id=" + id +
+                ", date=" + date +
+                ", tries=" + tries +
+                ", route=" + route +
+                '}';
     }
     //</editor-fold>
 }

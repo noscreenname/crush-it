@@ -1,18 +1,16 @@
 package a.m.a.entity;
 
-import a.m.a.Route;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ROUTE")
-public final class RouteEntity {
+public final class RouteEntity implements BasicEntity<Long> {
 
     @Id
     @Column(name = "ID")
-    private int id;
+    private long id;
 
     @Column(name = "NAME", nullable = true, unique = false)
     private String name;
@@ -29,8 +27,21 @@ public final class RouteEntity {
     public RouteEntity() {
     }
 
+    public RouteEntity(@Nonnull String name,
+                       @Nonnull GradeEntity grade,
+                       @Nonnull CragEntity crag,
+                       @Nullable String description) {
+        this();
+        setName(name);
+        setGrade(grade);
+        setCrag(crag);
+        setDescription(description);
+    }
+
     //<editor-fold desc="Getters & setters">
-    public int getId() {
+    @Override
+    @Nullable
+    public Long getId() {
         return id;
     }
 
@@ -71,12 +82,42 @@ public final class RouteEntity {
     }
     //</editor-fold>
 
-    @Nonnull
-    public Route toRoute() {
-        return new Route(
-                name,
-                grade.toGrade(),
-                crag.toCrag(),
-                description);
+
+    //<editor-fold desc="equals, hashCode & toString">
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RouteEntity that = (RouteEntity) o;
+
+        if (crag != null ? !crag.equals(that.crag) : that.crag != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (grade != null ? !grade.equals(that.grade) : that.grade != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+
+        return true;
     }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (grade != null ? grade.hashCode() : 0);
+        result = 31 * result + (crag != null ? crag.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "RouteEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", grade=" + grade +
+                ", crag=" + crag +
+                ", description='" + description + '\'' +
+                '}';
+    }
+    //</editor-fold>
 }
