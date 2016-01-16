@@ -1,6 +1,6 @@
 package a.m.a.service;
 
-import a.m.a.Attempt;
+import a.m.a.*;
 import a.m.a.common.CommonOperations;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
@@ -8,6 +8,8 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 import static com.ninja_squad.dbsetup.operation.CompositeOperation.sequenceOf;
@@ -40,27 +42,25 @@ public class AttemptServiceTest {
 
     @Test
     public void getAll_should_return_all_attempts() {
-//        dbSetupTracker.skipNextLaunch();
-//        assertEquals(service.getAll().size(), 7);
+        dbSetupTracker.skipNextLaunch();
+        assertEquals(service.getAll().size(), 3);
     }
 
     @Test
-    public void getTotalTries_for_route_should_return_sum_of_all_attempt_tries() {
-//        dbSetupTracker.skipNextLaunch();
-//        Crag arkose = new Crag("Arkose");
-//        assertEquals(service.getAll(arkose).size(), 4);
-    }
-
-    @Test
-    public void create_one_existing_route_should_add_new_attempt() {
-//        //-- GIVEN
-//        Optional<Route> routeOpt = new RouteService().get(1);
-//        assertTrue(routeOpt.isPresent());
-//        //-- WHEN
-//        int routeId = service.create(expected.getName(), 12, 1, expected.getDescription());
-//        //-- THEN
-//        Optional<Route> actualOpt = service.get(routeId);
-//        Assert.assertTrue(actualOpt.isPresent());
-//        assertEquals(actualOpt.get(), expected);
+    public void create_new_attempt_on_exiting_route_should_add_new_attempt() {
+        //-- GIVEN
+//        Grade red = new Grade(new GradeSystem("FONT"), 12, "6B+"); //id = 12
+//        Crag arkose = new Crag("Arkose"); // id = 1
+//        Route route = new Route("new route", red, arkose, "A darn fun route!");
+        LocalDate date = LocalDate.now();
+        int routeId = 1;
+        Optional<Route> routeOpt = new RouteService().get(routeId);
+        assertTrue(routeOpt.isPresent());
+        Attempt expected = new Attempt(routeOpt.get(), date);
+        //-- WHEN
+        int attemptId = service.create(routeId, date);
+        //-- THEN
+        Optional<Attempt> actualOpt = service.get(attemptId);
+        assertEquals(expected, actualOpt.get());
     }
 }

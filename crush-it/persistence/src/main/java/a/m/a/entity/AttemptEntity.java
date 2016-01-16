@@ -2,9 +2,11 @@ package a.m.a.entity;
 
 import a.m.a.Attempt;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "ATTEMPT")
@@ -39,8 +41,8 @@ public final class AttemptEntity {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(@Nonnull LocalDate date) {
+        this.date = Date.valueOf(date);
     }
 
     public int getTries() {
@@ -61,7 +63,7 @@ public final class AttemptEntity {
 
     @Nullable
     public static Attempt toAttempt(@Nullable AttemptEntity entity) {
-        return entity == null ? null : new Attempt(entity.route.toRoute(), entity.date);
+        return entity == null ? null : new Attempt(entity.route.toRoute(), entity.date.toLocalDate());
     }
     //</editor-fold>
 }

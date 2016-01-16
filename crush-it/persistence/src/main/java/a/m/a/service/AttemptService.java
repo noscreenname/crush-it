@@ -3,7 +3,6 @@ package a.m.a.service;
 import a.m.a.Attempt;
 import a.m.a.Crag;
 import a.m.a.HibernateFactory;
-import a.m.a.Route;
 import a.m.a.entity.AttemptEntity;
 import a.m.a.entity.CragEntity;
 import a.m.a.entity.GradeEntity;
@@ -16,7 +15,9 @@ import org.hibernate.criterion.Restrictions;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +37,12 @@ public final class AttemptService {
     }
 
     @Nonnull
-    public List<Route> getAll() {
+    public List<Attempt> getAll() {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             List entities = session.createCriteria(RouteEntity.class).list();
             tx.commit();
-            return convertToRoutes(entities);
+            return convertToAttempts(entities);
         } catch (HibernateException e) {
             System.out.println("Oops !");
             throw e;
@@ -49,7 +50,7 @@ public final class AttemptService {
     }
 
     @Nonnull
-    public List<Route> getAll(@Nonnull Crag crag) {
+    public List<Attempt> getAll(@Nonnull Crag crag) {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             List entities = session.createCriteria(RouteEntity.class, "route")
@@ -57,24 +58,21 @@ public final class AttemptService {
                     .add(Restrictions.eq("crag.name", crag.getName()))
                     .list();
             tx.commit();
-            return convertToRoutes(entities);
+            return convertToAttempts(entities);
         } catch (HibernateException e) {
             System.out.println("Oops !");
             throw e;
         }
     }
 
-    public int create(@Nullable String name, int gradeId, int cragId, @Nullable String description) {
+    public int create(int routeId, @Nonnull LocalDate date) {
         try (Session session = HibernateFactory.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
-            GradeEntity gradeEntity = session.get(GradeEntity.class, gradeId);
-            CragEntity cragEntity = session.get(CragEntity.class, cragId);
-            RouteEntity routeEntity = new RouteEntity();
-            routeEntity.setName(name);
-            routeEntity.setGrade(gradeEntity);
-            routeEntity.setCrag(cragEntity);
-            routeEntity.setDescription(description);
-            Serializable id = session.save(routeEntity);
+            RouteEntity routeEntity = session.get(RouteEntity.class, routeId);
+            AttemptEntity attemptEntity = new AttemptEntity();
+            attemptEntity.setRoute(routeEntity);
+            attemptEntity.setDate(date);
+            Serializable id = session.save(attemptEntity);
             tx.commit();
             return (int) id;
         } catch (HibernateException e) {
@@ -84,13 +82,13 @@ public final class AttemptService {
     }
 
     @Nonnull
-    private List<Route> convertToRoutes(@Nullable List entities) {
+    private List<Attempt> convertToAttempts(@Nullable List entities) {
         if (entities == null) {
             return new ArrayList<>(0);
         }
-        List<Route> routes = new ArrayList<>(entities.size());
+        List<Attempt> routes = new ArrayList<>(entities.size());
         for (Object entity : entities) {
-            routes.add(((RouteEntity) entity).toRoute());
+            routes.add((AttemptEntity.toAttempt((AttemptEntity) entity)));
         }
         return routes;
     }
