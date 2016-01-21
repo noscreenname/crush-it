@@ -19,7 +19,7 @@ public final class SqlGenerator {
     public static void main(String[] args) throws IOException {
         try {
             SqlGenerator generator = new SqlGenerator();
-            generator.loadProperties("./hibernate.properties");
+            generator.loadProperties("hibernate.properties");
             generator.initConfig();
             generator.generate();
         } catch (IOException e) {
