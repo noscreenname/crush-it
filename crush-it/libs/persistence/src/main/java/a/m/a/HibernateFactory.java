@@ -9,37 +9,36 @@ import org.hibernate.cfg.Configuration;
 
 public final class HibernateFactory {
 
-    private final static Logger LOGGER = Logger.getLogger(HibernateFactory.class);
+    private final static Logger logger = Logger.getLogger(HibernateFactory.class);
 
-    private static SessionFactory factory;
+    // Initialization-on-demand holder pattern
+    private static class Holder {
+        private static SessionFactory factory = createSessionFactory();
+    }
 
     private HibernateFactory() {
     }
 
+
     public synchronized static SessionFactory getSessionFactory() {
-        if (factory == null) {
-            try {
-                LOGGER.info("Initiating session factory");
-                factory = initConfig()
-                        .configure()
-                        .buildSessionFactory();
-            } catch (HibernateException e) {
-                LOGGER.error("Failed to initiate session factory");
-                throw e;
-            }
-        }
-        return factory;
+        return Holder.factory;
     }
 
-    private static Configuration initConfig() {
-        Configuration conf = new Configuration();
-        //TODO do this automatically
-        conf.addAnnotatedClass(AttemptEntity.class);
-        conf.addAnnotatedClass(CragEntity.class);
-        conf.addAnnotatedClass(GradeEntity.class);
-        conf.addAnnotatedClass(GradeSystemEntity.class);
-        conf.addAnnotatedClass(RouteEntity.class);
-        return conf;
+    public static SessionFactory createSessionFactory() {
+        try {
+            logger.info("Creating session factory");
+            Configuration conf = new Configuration();
+            //TODO do this automatically
+            conf.addAnnotatedClass(AttemptEntity.class);
+            conf.addAnnotatedClass(CragEntity.class);
+            conf.addAnnotatedClass(GradeEntity.class);
+            conf.addAnnotatedClass(GradeSystemEntity.class);
+            conf.addAnnotatedClass(RouteEntity.class);
+            return conf.configure().buildSessionFactory();
+        } catch (HibernateException e) {
+            logger.error("Failed to create session factory");
+            throw e;
+        }
     }
 
 }
