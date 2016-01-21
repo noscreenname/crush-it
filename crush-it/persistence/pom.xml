@@ -46,6 +46,11 @@
             <version>${jta.verion}</version>
         </dependency>
         <dependency>
+            <groupId>a.m.a</groupId>
+            <artifactId>logger</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.ninja-squad</groupId>
             <artifactId>DbSetup</artifactId>
             <version>${dbsetup.version}</version>
